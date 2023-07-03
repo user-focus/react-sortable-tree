@@ -56,7 +56,7 @@ export interface NodeRendererProps {
   canDrop?: boolean | undefined
 }
 
-const NodeRendererDefault: React.FC<NodeRendererProps> = function (props) {
+const NodeRendererDefault: React.FC<NodeRendererProps> = (props) => {
   props = { ...defaultProps, ...props }
 
   const {

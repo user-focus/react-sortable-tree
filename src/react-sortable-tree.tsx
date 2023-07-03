@@ -250,10 +250,7 @@ class ReactSortableTree extends Component {
       this.props.canDrop,
       this.drop,
       this.dragHover,
-      this.dndType,
-      this.state.draggingTreeData,
-      this.props.treeData,
-      this.props.getNodeKey
+      this.dndType
     )
 
     this.toggleChildrenVisibility = this.toggleChildrenVisibility.bind(this)
@@ -637,16 +634,18 @@ class ReactSortableTree extends Component {
       getNodeKey,
       rowDirection,
     } = mergeTheme(this.props)
+
     const {
       searchMatches,
       searchFocusTreeIndex,
       draggedNode,
       draggedDepth,
       draggedMinimumTreeIndex,
+      draggingTreeData,
       instanceProps,
     } = this.state
 
-    const treeData = this.state.draggingTreeData || instanceProps.treeData
+    const treeData = draggingTreeData || instanceProps.treeData
     const rowDirectionClass = rowDirection === 'rtl' ? 'rst__rtl' : undefined
 
     let rows
@@ -683,7 +682,7 @@ class ReactSortableTree extends Component {
 
     // Seek to the focused search result if there is one specified
     if (searchFocusTreeIndex !== undefined) {
-      this.listRef.current.scrollToIndex({
+      this.listRef?.current?.scrollToIndex({
         index: searchFocusTreeIndex,
         align: 'center',
       })
@@ -963,7 +962,7 @@ ReactSortableTree.defaultProps = {
   overscan: 0,
 }
 
-const SortableTreeWithoutDndContext = function (props: ReactSortableTreeProps) {
+const SortableTreeWithoutDndContext = (props: ReactSortableTreeProps) => {
   return (
     <DndContext.Consumer>
       {({ dragDropManager }) =>
@@ -975,7 +974,7 @@ const SortableTreeWithoutDndContext = function (props: ReactSortableTreeProps) {
   )
 }
 
-const SortableTree = function (props: ReactSortableTreeProps) {
+const SortableTree = (props: ReactSortableTreeProps) => {
   return (
     <DndProvider debugMode={props.debugMode} backend={HTML5Backend}>
       <SortableTreeWithoutDndContext {...props} />
