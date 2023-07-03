@@ -962,7 +962,9 @@ ReactSortableTree.defaultProps = {
   overscan: 0,
 }
 
-const SortableTreeWithoutDndContext = (props: ReactSortableTreeProps) => {
+export const SortableTreeWithoutDndContext = (
+  props: ReactSortableTreeProps
+) => {
   return (
     <DndContext.Consumer>
       {({ dragDropManager }) =>
@@ -974,17 +976,10 @@ const SortableTreeWithoutDndContext = (props: ReactSortableTreeProps) => {
   )
 }
 
-const SortableTree = (props: ReactSortableTreeProps) => {
+export const SortableTree = (props: ReactSortableTreeProps) => {
   return (
     <DndProvider debugMode={props.debugMode} backend={HTML5Backend}>
       <SortableTreeWithoutDndContext {...props} />
     </DndProvider>
   )
 }
-
-// Export the tree component without the react-dnd DragDropContext,
-// for when component is used with other components using react-dnd.
-// see: https://github.com/gaearon/react-dnd/issues/186
-export { SortableTreeWithoutDndContext }
-
-export default SortableTree
