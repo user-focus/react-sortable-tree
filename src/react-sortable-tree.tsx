@@ -818,7 +818,7 @@ export type ReactSortableTreeProps = {
 
   // Properties passed directly to the underlying Virtuoso component
   // See https://virtuoso.dev/virtuoso-api-reference/#virtuoso-properties
-  virtuosoProps?: VirtuosoProps
+  virtuosoProps?: VirtuosoProps<any, unknown>
 
   // Ref for Virtuoso component
   // Use virtuosoRef when you wont to use virtuoso handler
