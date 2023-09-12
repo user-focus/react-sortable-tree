@@ -1,6 +1,6 @@
 {
   "name": "@nosferatu500/react-sortable-tree",
-  "version": "4.4.0",
+  "version": "5.0.0-alpha.4",
   "description": "Drag-and-drop sortable component for nested data and hierarchies",
   "homepage": "https://nosferatu500.github.io/react-sortable-tree",
   "main": "lib/index.js",
@@ -8,14 +8,18 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "clean": "rimraf lib",
+    "clean-types": "rimraf lib/utils && rimraf lib/node-renderer-default.d.ts && rimraf lib/placeholder-renderer-default.d.ts && rimraf lib/react-sortable-tree.d.ts && rimraf lib/tree-node.d.ts && rimraf lib/tree-placeholder.d.ts",
     "prebuild": "yarn clean",
-    "build": "rollup -c",
+    "build": "rollup -c && yarn clean-types",
     "lint": "eslint '*.{js,json}' 'src/**/*.{ts,tsx}' --cache",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepublishOnly": "yarn build",
     "deploy-storybook": "gh-pages -d storybook-static"
   },
+  "files": [
+    "lib"
+  ],
   "engines": {
     "node": ">=16"
   },
@@ -90,7 +94,7 @@
     "react-dom": "^17.0.2",
     "rollup": "^3.29.1",
     "rollup-plugin-dts": "^6.0.2",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "@chrisneedham/rollup-plugin-peer-deps-external": "^2.3.1",
     "rollup-plugin-postcss": "^4.0.2",
     "storybook": "^7.4.1",
     "typescript": "^5.2.2"
