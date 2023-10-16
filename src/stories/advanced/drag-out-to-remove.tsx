@@ -2,8 +2,6 @@ import React, { Component, useState } from 'react'
 import { DndProvider, DropTarget } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { SortableTreeWithoutDndContext as SortableTree } from '../../../src'
-// In your own app, you would need to use import styles once in the app
-// import 'react-sortable-tree/styles.css';
 
 // -------------------------
 // Create an drop target component that can receive the nodes

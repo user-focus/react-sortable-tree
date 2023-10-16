@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { SortableTree } from '../../../src'
-// In your own app, you would need to use import styles once in the app
-// import 'react-sortable-tree/styles.css';
 
 const TreeToTree: React.FC = () => {
   const [treeData1, setTreeData1] = useState([
