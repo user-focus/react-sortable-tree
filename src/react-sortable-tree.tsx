@@ -211,13 +211,7 @@ class ReactSortableTree extends Component {
     this.scrollZoneVirtualList = (createScrollingComponent || withScrolling)(
       React.forwardRef((props, ref) => {
         const { dragDropManager, rowHeight, ...otherProps } = props
-        return (
-          <VList
-            ref={this.listRef}
-            scrollerRef={(scrollContainer) => (ref.current = scrollContainer)}
-            {...otherProps}
-          />
-        )
+        return <VList ref={this.listRef} {...otherProps} />
       })
     )
     this.vStrength = createVerticalStrength(slideRegionSize)
@@ -708,9 +702,9 @@ class ReactSortableTree extends Component {
           verticalStrength={this.vStrength}
           horizontalStrength={this.hStrength}
           className="rst__virtualScrollOverride"
-          style={innerStyle}
-          itemContent={(index) =>
-            this.renderRow(rows[index], {
+          style={innerStyle}>
+          {rows.map((item, index) => {
+            return this.renderRow(item, {
               listIndex: index,
               getPrevRow: () => rows[index - 1] || undefined,
               matchKeys,
@@ -718,8 +712,8 @@ class ReactSortableTree extends Component {
               swapDepth: draggedDepth,
               swapLength,
             })
-          }
-        />
+          })}
+        </ScrollZoneVirtualList>
       )
     }
 
