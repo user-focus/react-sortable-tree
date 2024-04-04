@@ -1,18 +1,12 @@
 // @ts-nocheck
 
 import React, { Component } from 'react'
-import withScrolling, {
-  createHorizontalStrength,
-  createScrollingComponent,
-  createVerticalStrength,
-} from '@nosferatu500/react-dnd-scrollzone'
 import isEqual from 'lodash.isequal'
 import { DndContext, DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { VList, VListHandle } from 'virtua'
 import NodeRendererDefault from './node-renderer-default'
 import PlaceholderRendererDefault from './placeholder-renderer-default'
-import './react-sortable-tree.css'
 import TreeNode from './tree-node'
 import TreePlaceholder from './tree-placeholder'
 import { classnames } from './utils/classnames'
@@ -206,16 +200,6 @@ class ReactSortableTree extends Component {
       this.drop,
       this.dndType
     )
-
-    // Prepare scroll-on-drag options for this list
-    this.scrollZoneVirtualList = (createScrollingComponent || withScrolling)(
-      React.forwardRef((props, ref) => {
-        const { dragDropManager, rowHeight, ...otherProps } = props
-        return <VList ref={this.listRef} {...otherProps} />
-      })
-    )
-    this.vStrength = createVerticalStrength(slideRegionSize)
-    this.hStrength = createHorizontalStrength(slideRegionSize)
 
     this.state = {
       draggingTreeData: undefined,
@@ -694,14 +678,11 @@ class ReactSortableTree extends Component {
     } else {
       containerStyle = { height: '100%', ...containerStyle }
 
-      const ScrollZoneVirtualList = this.scrollZoneVirtualList
       list = (
-        <ScrollZoneVirtualList
-          data={rows}
+        <VList
+          id="vlist"
+          ref={this.listRef}
           dragDropManager={dragDropManager}
-          verticalStrength={this.vStrength}
-          horizontalStrength={this.hStrength}
-          className="rst__virtualScrollOverride"
           style={innerStyle}>
           {rows.map((item, index) => {
             return this.renderRow(item, {
@@ -713,7 +694,7 @@ class ReactSortableTree extends Component {
               swapLength,
             })
           })}
-        </ScrollZoneVirtualList>
+        </VList>
       )
     }
 
