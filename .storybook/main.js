@@ -3,7 +3,6 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-styling",
     "@storybook/addon-actions",
     "@storybook/addon-webpack5-compiler-swc"
   ],
