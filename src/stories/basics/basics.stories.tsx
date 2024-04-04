@@ -9,7 +9,6 @@ import RowDirectionExample from './rtl-support'
 import SearchExample from './search'
 import ThemesExample from './themes'
 import TreeDataIOExample from './tree-data-io'
-import VirtuosoPropsExample from './virtuoso-props'
 
 const meta: Meta<typeof BarebonesExample> = {
   title: "Basics",
@@ -54,8 +53,4 @@ export const Callbacks: Story = {
 
 export const RowDirectionSupport: Story = {
   render: () => <RowDirectionExample />,
-};
-
-export const VirtuosoProperties: Story = {
-  render: () => <VirtuosoPropsExample />,
 };

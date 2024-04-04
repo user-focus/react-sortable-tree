@@ -9,7 +9,7 @@ import withScrolling, {
 import isEqual from 'lodash.isequal'
 import { DndContext, DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { Virtuoso, VirtuosoHandle, VirtuosoProps } from 'react-virtuoso'
+import { VList, VListHandle } from 'virtua'
 import NodeRendererDefault from './node-renderer-default'
 import PlaceholderRendererDefault from './placeholder-renderer-default'
 import './react-sortable-tree.css'
@@ -185,8 +185,7 @@ class ReactSortableTree extends Component {
   constructor(props) {
     super(props)
 
-    this.listRef = props.virtuosoRef || React.createRef()
-    this.listProps = props.virtuosoProps || {}
+    this.listRef = props.virtuaRef || React.createRef<VListHandle>()
 
     const { dndType, nodeContentRenderer, treeNodeRenderer, slideRegionSize } =
       mergeTheme(props)
@@ -213,7 +212,7 @@ class ReactSortableTree extends Component {
       React.forwardRef((props, ref) => {
         const { dragDropManager, rowHeight, ...otherProps } = props
         return (
-          <Virtuoso
+          <VList
             ref={this.listRef}
             scrollerRef={(scrollContainer) => (ref.current = scrollContainer)}
             {...otherProps}
@@ -682,8 +681,8 @@ class ReactSortableTree extends Component {
 
     // Seek to the focused search result if there is one specified
     if (searchFocusTreeIndex !== undefined) {
-      this.listRef?.current?.scrollToIndex({
-        index: searchFocusTreeIndex,
+      this.listRef?.current?.scrollToIndex(searchFocusTreeIndex, {
+        smooth: true,
         align: 'center',
       })
     }
@@ -702,7 +701,6 @@ class ReactSortableTree extends Component {
       containerStyle = { height: '100%', ...containerStyle }
 
       const ScrollZoneVirtualList = this.scrollZoneVirtualList
-      // Render list with react-virtuoso
       list = (
         <ScrollZoneVirtualList
           data={rows}
@@ -721,7 +719,6 @@ class ReactSortableTree extends Component {
               swapLength,
             })
           }
-          {...this.listProps}
         />
       )
     }
@@ -815,14 +812,10 @@ export type ReactSortableTreeProps = {
   // Class name for the container wrapping the tree
   className?: string
 
-  // Properties passed directly to the underlying Virtuoso component
-  // See https://virtuoso.dev/virtuoso-api-reference/#virtuoso-properties
-  virtuosoProps?: VirtuosoProps<any, unknown>
-
-  // Ref for Virtuoso component
-  // Use virtuosoRef when you wont to use virtuoso handler
+  // Ref for virtua component
+  // Use virtuaRef when you want to use virtua handler
   // (ex. scrollTo scrollToIndex)
-  virtuosoRef?: React.Ref<VirtuosoHandle>
+  virtuaRef?: React.Ref<VListHandle>
 
   // Style applied to the inner, scrollable container (for padding, etc.)
   innerStyle?: any
@@ -960,6 +953,7 @@ ReactSortableTree.defaultProps = {
   rowDirection: 'ltr',
   debugMode: false,
   overscan: 0,
+  virtuaRef: undefined,
 }
 
 export const SortableTreeWithoutDndContext = (
